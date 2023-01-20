@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
+import { useDispatch } from "react-redux";
 
+import { createPost } from "../../actions/posts";
 import useStyles from "./styles";
 
 const Form = () => {
@@ -13,8 +15,13 @@ const Form = () => {
     selectedFile: "",
   });
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(createPost(postData));
+  };
   const clear = () => {};
 
   return (
@@ -35,7 +42,7 @@ const Form = () => {
           onChange={(e) =>
             setPostData({ ...postData, creator: e.target.value })
           }
-        ></TextField>
+        />
         <TextField
           name="title"
           variant="outlined"
@@ -43,7 +50,7 @@ const Form = () => {
           fullWidth
           value={postData.title}
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
-        ></TextField>
+        />
         <TextField
           name="message"
           variant="outlined"
@@ -53,7 +60,7 @@ const Form = () => {
           onChange={(e) =>
             setPostData({ ...postData, message: e.target.value })
           }
-        ></TextField>
+        />
         <TextField
           name="tags"
           variant="outlined"
@@ -61,7 +68,7 @@ const Form = () => {
           fullWidth
           value={postData.tags}
           onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
-        ></TextField>
+        />
         <div className={classes.fileInput}>
           <FileBase
             type="file"
