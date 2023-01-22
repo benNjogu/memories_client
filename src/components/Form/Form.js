@@ -6,14 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../actions/posts";
 import useStyles from "./styles";
 
+const defaultValues = {
+  creator: "",
+  title: "",
+  message: "",
+  tags: "",
+  selectedFile: "",
+};
+
 const Form = ({ currentId, setCurrentId }) => {
-  const [postData, setPostData] = useState({
-    creator: "",
-    title: "",
-    message: "",
-    tags: "",
-    selectedFile: "",
-  });
+  const [postData, setPostData] = useState(defaultValues);
   const post = useSelector((state) =>
     currentId ? state.posts.find((p) => p._id == currentId) : null
   );
@@ -29,8 +31,14 @@ const Form = ({ currentId, setCurrentId }) => {
 
     if (currentId) dispatch(updatePost(currentId, postData));
     else dispatch(createPost(postData));
+
+    clear();
   };
-  const clear = () => {};
+
+  const clear = () => {
+    setCurrentId(null);
+    setPostData(defaultValues);
+  };
 
   return (
     <Paper className={classes.paper}>
