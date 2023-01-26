@@ -3,7 +3,9 @@ import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
+import decode from "jwt-decode";
 
+import * as actionType from "../../constants/actionTypes";
 import memories from "../../images/memories.png";
 import useStyles from "./styles";
 
@@ -18,13 +20,16 @@ const Navbar = () => {
 
   useEffect(() => {
     const token = user?.token;
-
+    if (token) {
+      const decodedTokent = decode(token);
+      if (decodedTokent.exp * 1000 < new Date().getTime()) logout();
+    }
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
 
   const logout = () => {
-    dispatch({ type: "LOGOUT" });
-    navigate.push("/");
+    dispatch({ type: actionType.LOGOUT });
+    navigate("/auth");
     setUser(null);
   };
 
