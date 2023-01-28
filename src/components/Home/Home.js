@@ -38,8 +38,11 @@ const Home = () => {
   }, [currentId, dispatch]);
 
   const searchPost = () => {
-    if (search.trim()) {
+    if (search.trim() || tags) {
       dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
+      navigate(
+        `/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`
+      );
     } else {
       navigate("/");
     }
@@ -47,7 +50,7 @@ const Home = () => {
 
   const handleKeyPress = (e) => {
     if (e.keyCode === 13) {
-      searchPost("/");
+      searchPost();
     }
   };
 
@@ -86,7 +89,7 @@ const Home = () => {
                 onKeyPress={handleKeyPress}
                 value={search}
                 onChange={(e) => {
-                  setSearch = e.target.value;
+                  setSearch(e.target.value);
                 }}
               />
               <ChipInput
