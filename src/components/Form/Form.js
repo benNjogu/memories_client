@@ -16,7 +16,7 @@ const defaultValues = {
 const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState(defaultValues);
   const post = useSelector((state) =>
-    currentId ? state.posts.find((p) => p._id === currentId) : null
+    currentId ? state.posts.posts.find((p) => p._id === currentId) : null
   );
   const classes = useStyles();
   const dispatch = useDispatch();
