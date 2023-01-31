@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { createPost, updatePost } from "../../actions/posts";
 import useStyles from "./styles";
@@ -20,6 +21,7 @@ const Form = ({ currentId, setCurrentId }) => {
   );
   const classes = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("profile"));
 
   useEffect(() => {
@@ -29,13 +31,12 @@ const Form = ({ currentId, setCurrentId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (currentId) {
+    if (currentId)
       dispatch(
         updatePost(currentId, { ...postData, name: user?.result?.name })
       );
-    } else {
-      dispatch(createPost({ ...postData, name: user?.result?.name }));
-    }
+    else
+      dispatch(createPost({ ...postData, name: user?.result?.name }, navigate));
 
     clear();
   };
