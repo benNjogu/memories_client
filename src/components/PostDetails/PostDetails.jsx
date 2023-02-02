@@ -4,6 +4,7 @@ import {
   Typography,
   CircularProgress,
   Divider,
+  Grid,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
@@ -102,19 +103,27 @@ const PostDetails = () => {
                   onClick={() => openPost(_id)}
                   key={_id}
                 >
-                  <Typography gutterBottom variant="h6">
-                    {title}
-                  </Typography>
+                  <div
+                    style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      width: "11rem",
+                    }}
+                  >
+                    <Typography gutterBottom variant="h6" noWrap={true}>
+                      {title}
+                    </Typography>
+                  </div>
                   <Typography gutterBottom variant="subtitle2">
                     {name}
                   </Typography>
                   <Typography gutterBottom variant="subtitle2">
-                    {message}
+                    {post.message.split(" ").splice(0, 10).join(" ")}...
                   </Typography>
                   <Typography gutterBottom variant="subtitle1">
                     Likes: {likes.length}
                   </Typography>
-                  <img src={selectedFile} width="200px" />
+                  <img src={selectedFile} width="200px" height="120px" />
                 </div>
               )
             )}
