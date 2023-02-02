@@ -13,3 +13,7 @@ memories part 3
 memories part 3
 
 ![postdetails](https://user-images.githubusercontent.com/60463836/216219442-62e5a01b-691a-4b1e-a1a6-03d69f9d40e9.PNG)
+
+memories part 4
+
+![commentsgood](https://user-images.githubusercontent.com/60463836/216316521-6add4d25-0000-4ef3-bade-b987fd8142f5.PNG)
