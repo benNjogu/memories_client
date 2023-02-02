@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardActions,
@@ -22,9 +22,23 @@ const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [likes, setLikes] = useState(post?.likes);
+
+  const userId = (id) => id !== user?.result.googleId || user?.result?._id;
+  const hasLikedPost = post.likes.find((like) => like === userId);
   const user = JSON.parse(localStorage.getItem("profile"));
 
   const openPost = () => navigate(`/posts/${post._id}`);
+
+  const handleLike = async () => {
+    dispatch(likePost(post._id));
+
+    if (hasLikedPost) {
+      setLikes(post.likes.filter(userId));
+    } else {
+      setLikes([...post.likes, userId]);
+    }
+  };
 
   return (
     <Card className={classes.card} raised elevation={6}>
@@ -77,7 +91,7 @@ const Post = ({ post, setCurrentId }) => {
           size="small"
           color="primary"
           disabled={!user?.result}
-          onClick={() => dispatch(likePost(post._id))}
+          onClick={handleLike}
         >
           <Like user={user} post={post} />
         </Button>
@@ -85,7 +99,7 @@ const Post = ({ post, setCurrentId }) => {
           (user?.result?._id === post?.creator && (
             <Button
               size="small"
-              color="primary"
+              color="secondary"
               onClick={() => dispatch(deletePost(post._id))}
             >
               <DeleteIcon fontSize="small" />
